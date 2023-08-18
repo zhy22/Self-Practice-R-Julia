@@ -1,0 +1,11 @@
+model{
+for(i in 1:n ){
+
+y[i]~dnorm(mu[i],tau)
+mu[i]<-alpha+beta*x[i]
+}
+alpha~dnorm(0,0.001)#must be proper 
+beta~dnorm(0,0.001)
+tau~dgamma(0.001,0.001)#Is Gamma! 
+sigma<-1/sqrt(tau)
+}

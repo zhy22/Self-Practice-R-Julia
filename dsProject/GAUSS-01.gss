@@ -1,0 +1,32 @@
+library tsmt;
+fname = getGAUSShome() $+ "pkg/tsmt/examples/mink.csv";
+y = loadd(fname, "LogMink + LogMusk");
+call varmaFit(y,3);
+
+fname2 = getGAUSShome() $+ "pkg/tsmt/var_enders_trans.dat";
+call varmaFit(fname2,".", 3);
+
+b={0.5,-0.8};
+q=0;
+p=2;
+const = 1.5;
+tr=0;
+n=200;
+k=1;
+std=1;
+seed=5012;
+y_sim=simarmamt(b,p,q,const,tr,n,k,std,seed);
+
+a=acf(y_sim,10,0);
+plotACF(y_sim,10,0);
+b=pacf(y_sim,10,0);
+plotPACF(y_sim,10,0);
+
+call arimaFit(y_sim,2);
+call arimaFit(y_sim,2,2,0);
+
+plotTS(196001,4,y_sim);
+
+vmdiffmt(y,1);
+
+
